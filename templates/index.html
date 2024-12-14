@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>инстансы</title>
+</head>
+<body>
+    <h1>инстансы</h1>
+    
+    <form method="POST" action="/add_instance">
+        <label>IP: </label><input type="text" name="ip" required>
+        <label>Port: </label><input type="text" name="port" required>
+        <button type="submit">добавить</button>
+    </form>
+    <ul>
+        {% for inst in instances %}
+            <li>{{ inst.ip }}:{{ inst.port }} - 
+                {% if inst.status == 'healthy' %}
+                    Healthy
+                {% else %}
+                    Unhealthy
+                {% endif %}
+                <form method="POST" action="/remove_instance" style="display:inline;">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                    <button type="submit">удалить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
